@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const request = require("request");
 const cheerio = require("cheerio");
+const reposPageObj = require("./repos");
 
 request(url, cb);
 
@@ -23,9 +24,10 @@ function handleHtml(html){
     // console.log(anchorElem.html);
     for (let i = 0; i < 3; i++) {
         let relativeLink = selecTool(anchorElem[i]).attr("href");
-        console.log(relativeLink);
+        // console.log(relativeLink);
         let fullLink = "https://github.com" + relativeLink;
-        console.log(fullLink);
+        // console.log(fullLink);
+        reposPageObj.getRepo(fullLink);
     }
     
 }
