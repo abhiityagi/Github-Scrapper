@@ -26,7 +26,7 @@ function extractAllIssues(html){
     let issuesElemArr = selecTool(
         '.Link--primary.v-align-middle.no-underline.h4.js-navigation-open.markdown-title'
     );
-    for (let i = 0; i < 5; i++){
+    for (let i = 0; i < issuesElemArr.length; i++){
         let issuesLink = selecTool(issuesElemArr[i]).attr("href");
         console.log(issuesLink);
     }
