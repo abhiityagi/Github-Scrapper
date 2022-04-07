@@ -1,30 +1,38 @@
+const fs = require("fs");
+const path = require("path");
 const request = require("request");
-const cheerio = require("request");
+const cheerio = require("cheerio");
+const jspdf = require("jspdf");
 
-function getIssues(url){
+function getAllIssues(url){
     console.log(url);
     request(url, cb);
 }
 
 function cb (err, response, body) {
     if (err) {
-        console.log("error", err)
+        console.err("error", err)
+    }
+    else if (response.statusCode == 404){
+        console.log("page not found");
     }
     else {
-        handleHtml(body);
+        extractAllIssues(body);
     }
 }
 
-function handleHtml(html){
-    let extractIssues = cheerio.load(html);
-    let getAllOfIssues = extractIssues('.d-block.d-md-none.position-absolute.top-0.bottom-0.left-0.right-0');
+function extractAllIssues(html){
+    let selecTool = cheerio.load(html);
+    let issuesElemArr = selecTool(
+        '.Link--primary.v-align-middle.no-underline.h4.js-navigation-open.markdown-title'
+    );
     for (let i = 0; i < 5; i++){
-        let relevant = extractIssues(getAllOfIssues[i]).attr("href");
-        console.log(relevant);
+        let issuesLink = selecTool(issuesElemArr[i]).attr("href");
+        console.log(issuesLink);
     }
 
 }
 
 module.exports = {
-    getAllIssues: getIssues
+    getAllIssues: getAllIssues
 }

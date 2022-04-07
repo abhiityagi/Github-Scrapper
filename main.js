@@ -11,9 +11,12 @@ request(url, cb);
 function cb(err, response, body) {
     if (err) {
         console.error("error", err);
+    } else if (response.statusCode == 404) {
+        console.log("page not found");
     } else {
         handleHtml(body);
     }
+    
 }
 
 // handle html function
@@ -21,7 +24,7 @@ function cb(err, response, body) {
 function handleHtml(html){
     let selecTool = cheerio.load(html);
     let anchorElem = selecTool('.no-underline.flex-1.d-flex.flex-column');
-    // console.log(anchorElem.html);
+    // console.log(anchorElem);
     for (let i = 0; i < 3; i++) {
         let relativeLink = selecTool(anchorElem[i]).attr("href");
         // console.log(relativeLink);

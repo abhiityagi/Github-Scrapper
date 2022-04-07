@@ -12,19 +12,21 @@ function getAllRepos(url){
 function cb (err, response, body) {
     if (err) {
         console.err("error", err);
+    } else if (response.statusCode == 404) {
+        console.log("page not found");
     } else {
-        handleHtml(body);
+        extractAllReposLink(body);
     }
 }
 
-function handleHtml(html){
+function extractAllReposLink(html){
     let selecTool = cheerio.load(html);
-    let anchorElem = selecTool('.text-bold.wb-break-word');
+    let reposElemArr = selecTool('.text-bold.wb-break-word');
     for (let i = 0; i < 10; i++) {
-        let relativeLink = selecTool(anchorElem[i]).attr("href");
-        // console.log(relativeLink);
-        let fullLink = "https://github.com" + relativeLink + "/issues";
-        console.log(fullLink);
+        let reposLink = selecTool(reposElemArr[i]).attr("href");
+        // console.log(reposLink);
+        let fullLink = "https://github.com" + reposLink + "/issues";
+        // console.log(fullLink);
         issuesObj.getAllIssues(fullLink);
     }
 }
