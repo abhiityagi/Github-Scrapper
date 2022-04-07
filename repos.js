@@ -5,13 +5,13 @@ const cheerio = require("cheerio");
 const issuesObj = require("./issues");
 
 function getAllRepos(url){
-    console.log(url);
+    // console.log(url);
     request(url, cb);
 }
 
 function cb (err, response, body) {
     if (err) {
-        console.err("error", err);
+        console.error("error", err);
     } else if (response.statusCode == 404) {
         console.log("page not found");
     } else {
