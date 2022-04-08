@@ -25,6 +25,8 @@ function extractAllReposLink(html){
     for (let i = 0; i < 10; i++) {
         let reposLink = selecTool(reposElemArr[i]).attr("href");
         // console.log(reposLink);
+        let reposName = reposLink.split("/").pop();
+        console.log("Repos Name:=> " + reposName);
         let fullLink = "https://github.com" + reposLink + "/issues";
         // console.log(fullLink);
         issuesObj.getAllIssues(fullLink);

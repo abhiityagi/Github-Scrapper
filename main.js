@@ -28,9 +28,16 @@ function handleHtml(html){
     for (let i = 0; i < 3; i++) {
         let relativeLink = selecTool(anchorElem[i]).attr("href");
         // console.log(relativeLink);
+        let topicName = relativeLink.split("/").pop();
+        console.log("Topics Name:=> " + topicName);
+        let folderPath = path.join(__dirname + "/DataResults", topicName);
+        // console.log(folderPath);
+        if (!fs.existsSync(folderPath)) {
+            fs.mkdirSync(folderPath);
+        }
         let fullLink = "https://github.com" + relativeLink;
         // console.log(fullLink);
-        reposPageObj.getRepo(fullLink);
+        reposPageObj.getRepo(fullLink, folderPath);
     }
     
 }
